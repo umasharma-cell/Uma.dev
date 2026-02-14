@@ -56,20 +56,20 @@ async function seedDatabase() {
     
     // Skills
     const skillsData = [
-      { name: "JavaScript (ES6+)", category: "Frontend", proficiency: 95, icon: "SiJavascript" },
-      { name: "React.js", category: "Frontend", proficiency: 90, icon: "SiReact" },
-      { name: "Redux", category: "Frontend", proficiency: 85, icon: "SiRedux" },
-      { name: "Tailwind CSS", category: "Frontend", proficiency: 90, icon: "SiTailwindcss" },
-      { name: "Node.js", category: "Backend", proficiency: 85, icon: "SiNodedotjs" },
-      { name: "Express.js", category: "Backend", proficiency: 85, icon: "SiExpress" },
-      { name: "Java", category: "Backend", proficiency: 75, icon: "FaJava" },
-      { name: "MongoDB", category: "Database", proficiency: 85, icon: "SiMongodb" },
-      { name: "MySQL", category: "Database", proficiency: 80, icon: "SiMysql" },
-      { name: "Firebase", category: "Database", proficiency: 80, icon: "SiFirebase" },
-      { name: "Supabase", category: "Database", proficiency: 75, icon: "SiSupabase" },
-      { name: "Gemini LLM", category: "AI/LLM", proficiency: 80, icon: "SiGoogle" },
-      { name: "OpenAI API", category: "AI/LLM", proficiency: 85, icon: "SiOpenai" },
-      { name: "Prompt Engineering", category: "AI/LLM", proficiency: 90, icon: "FaBrain" }
+      { name: "JavaScript (ES6+)", category: "Frontend", proficiency: 95, icon: "SiJavascript", yearsOfExp: 2 },
+      { name: "React.js", category: "Frontend", proficiency: 90, icon: "SiReact", yearsOfExp: 2 },
+      { name: "Redux", category: "Frontend", proficiency: 85, icon: "SiRedux", yearsOfExp: 2 },
+      { name: "Tailwind CSS", category: "Frontend", proficiency: 90, icon: "SiTailwindcss", yearsOfExp: 2 },
+      { name: "Node.js", category: "Backend", proficiency: 85, icon: "SiNodedotjs", yearsOfExp: 1 },
+      { name: "Express.js", category: "Backend", proficiency: 85, icon: "SiExpress", yearsOfExp: 1 },
+      { name: "Java", category: "Backend", proficiency: 75, icon: "FaJava", yearsOfExp: 1 },
+      { name: "MongoDB", category: "Database", proficiency: 85, icon: "SiMongodb", yearsOfExp: 1 },
+      { name: "MySQL", category: "Database", proficiency: 80, icon: "SiMysql", yearsOfExp: 1 },
+      { name: "Firebase", category: "Database", proficiency: 80, icon: "SiFirebase", yearsOfExp: 1 },
+      { name: "Supabase", category: "Database", proficiency: 75, icon: "SiSupabase", yearsOfExp: 1 },
+      { name: "Gemini LLM", category: "AI/LLM", proficiency: 80, icon: "SiGoogle", yearsOfExp: 1 },
+      { name: "OpenAI API", category: "AI/LLM", proficiency: 85, icon: "SiOpenai", yearsOfExp: 1 },
+      { name: "Prompt Engineering", category: "AI/LLM", proficiency: 90, icon: "FaBrain", yearsOfExp: 1 }
     ];
 
     for (const s of skillsData) {

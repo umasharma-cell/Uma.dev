@@ -26,7 +26,12 @@ export function SkillCard({ skill, index }: { skill: Skill; index: number }) {
         <IconComponent />
       </div>
       
-      <h3 className="font-display font-semibold text-lg z-10">{skill.name}</h3>
+      <div className="z-10 text-center">
+        <h3 className="font-display font-semibold text-lg">{skill.name}</h3>
+        <p className="text-xs text-muted-foreground mt-1">
+          {skill.yearsOfExp} {skill.yearsOfExp === 1 ? 'Year' : 'Years'} Exp
+        </p>
+      </div>
       
       <div className="w-full bg-secondary h-1.5 rounded-full overflow-hidden z-10">
         <motion.div 
