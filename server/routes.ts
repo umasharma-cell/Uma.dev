@@ -73,11 +73,14 @@ async function seedDatabase() {
     ];
 
     for (const s of skillsData) {
-      // Check if skill exists
+      // Always update skills to ensure correct values
       const existing = await storage.getSkills();
       const found = existing.find(sk => sk.name === s.name);
       if (!found) {
         await storage.createSkill(s);
+      } else {
+        // Update existing skill
+        await db.update(skills).set(s).where(eq(skills.id, found.id));
       }
     }
 
