@@ -1,38 +1,62 @@
-import { type User, type InsertUser } from "@shared/schema";
-import { randomUUID } from "crypto";
-
-// modify the interface with any CRUD methods
-// you might need
+import { 
+  skills, experiences, projects, contactMessages,
+  type Skill, type InsertSkill,
+  type Experience, type InsertExperience,
+  type Project, type InsertProject,
+  type ContactMessage, type InsertContactMessage
+} from "@shared/schema";
+import { db } from "./db";
+import { eq } from "drizzle-orm";
 
 export interface IStorage {
-  getUser(id: string): Promise<User | undefined>;
-  getUserByUsername(username: string): Promise<User | undefined>;
-  createUser(user: InsertUser): Promise<User>;
+  // Skills
+  getSkills(): Promise<Skill[]>;
+  createSkill(skill: InsertSkill): Promise<Skill>;
+  
+  // Experiences
+  getExperiences(): Promise<Experience[]>;
+  createExperience(experience: InsertExperience): Promise<Experience>;
+  
+  // Projects
+  getProjects(): Promise<Project[]>;
+  createProject(project: InsertProject): Promise<Project>;
+  
+  // Contact
+  createContactMessage(message: InsertContactMessage): Promise<ContactMessage>;
 }
 
-export class MemStorage implements IStorage {
-  private users: Map<string, User>;
-
-  constructor() {
-    this.users = new Map();
+export class DatabaseStorage implements IStorage {
+  async getSkills(): Promise<Skill[]> {
+    return await db.select().from(skills);
   }
 
-  async getUser(id: string): Promise<User | undefined> {
-    return this.users.get(id);
+  async createSkill(skill: InsertSkill): Promise<Skill> {
+    const [newSkill] = await db.insert(skills).values(skill).returning();
+    return newSkill;
   }
 
-  async getUserByUsername(username: string): Promise<User | undefined> {
-    return Array.from(this.users.values()).find(
-      (user) => user.username === username,
-    );
+  async getExperiences(): Promise<Experience[]> {
+    return await db.select().from(experiences);
   }
 
-  async createUser(insertUser: InsertUser): Promise<User> {
-    const id = randomUUID();
-    const user: User = { ...insertUser, id };
-    this.users.set(id, user);
-    return user;
+  async createExperience(experience: InsertExperience): Promise<Experience> {
+    const [newExperience] = await db.insert(experiences).values(experience).returning();
+    return newExperience;
+  }
+
+  async getProjects(): Promise<Project[]> {
+    return await db.select().from(projects);
+  }
+
+  async createProject(project: InsertProject): Promise<Project> {
+    const [newProject] = await db.insert(projects).values(project).returning();
+    return newProject;
+  }
+
+  async createContactMessage(message: InsertContactMessage): Promise<ContactMessage> {
+    const [newMessage] = await db.insert(contactMessages).values(message).returning();
+    return newMessage;
   }
 }
 
-export const storage = new MemStorage();
+export const storage = new DatabaseStorage();
