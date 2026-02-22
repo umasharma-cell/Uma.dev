@@ -4,11 +4,23 @@ import { storage } from "./storage";
 import { api } from "@shared/routes";
 import { z } from "zod";
 
+import nodemailer from "nodemailer";
+
 export async function registerRoutes(
   httpServer: Server,
   app: Express
 ): Promise<Server> {
   
+  // Create transporter for email notifications
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'work.uma26@gmail.com',
+      // User will need to provide an App Password for this to work
+      pass: process.env.GMAIL_APP_PASSWORD 
+    }
+  });
+
   // === API ROUTES ===
 
   app.get(api.skills.list.path, async (_req, res) => {
@@ -30,6 +42,25 @@ export async function registerRoutes(
     try {
       const input = api.contact.submit.input.parse(req.body);
       const message = await storage.createContactMessage(input);
+      
+      // Send email notification
+      if (process.env.GMAIL_APP_PASSWORD) {
+        const mailOptions = {
+          from: 'work.uma26@gmail.com',
+          to: 'work.uma26@gmail.com',
+          subject: `New Portfolio Message from ${input.name}`,
+          text: `Name: ${input.name}\nEmail: ${input.email}\n\nMessage:\n${input.message}`
+        };
+
+        transporter.sendMail(mailOptions, (error, info) => {
+          if (error) {
+            console.error('Error sending email:', error);
+          } else {
+            console.log('Email sent: ' + info.response);
+          }
+        });
+      }
+
       res.status(201).json(message);
     } catch (err) {
       if (err instanceof z.ZodError) {
