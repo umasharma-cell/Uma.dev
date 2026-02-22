@@ -1,4 +1,4 @@
-import { pgTable, text, serial, integer, boolean, timestamp, jsonb } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, integer, boolean, timestamp, jsonb, real } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -10,7 +10,7 @@ export const skills = pgTable("skills", {
   category: text("category").notNull(), // "Frontend", "Backend", "Tools", "AI/LLM"
   proficiency: integer("proficiency").default(100), // 0-100
   icon: text("icon"), // Lucide icon name or simple text
-  yearsOfExp: integer("years_of_exp").default(1),
+  yearsOfExp: real("years_of_exp").default(1), // Supports decimal values like 1.5
 });
 
 export const experiences = pgTable("experiences", {
