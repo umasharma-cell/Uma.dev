@@ -1,9 +1,16 @@
+import "dotenv/config";
 import express, { type Request, Response, NextFunction } from "express";
+import nodePath from "path";
 import { registerRoutes } from "./routes";
 import { serveStatic } from "./static";
 import { createServer } from "http";
 
 const app = express();
+
+// Serve attached_assets as static files
+const assetsPath = nodePath.resolve(process.cwd(), "attached_assets");
+console.log("Serving assets from:", assetsPath);
+app.use("/attached_assets", express.static(assetsPath));
 const httpServer = createServer(app);
 
 declare module "http" {
@@ -90,14 +97,7 @@ app.use((req, res, next) => {
   // this serves both the API and the client.
   // It is the only port that is not firewalled.
   const port = parseInt(process.env.PORT || "5000", 10);
-  httpServer.listen(
-    {
-      port,
-      host: "0.0.0.0",
-      reusePort: true,
-    },
-    () => {
-      log(`serving on port ${port}`);
-    },
-  );
+  httpServer.listen(port, "0.0.0.0", () => {
+    log(`serving on port ${port}`);
+  });
 })();
