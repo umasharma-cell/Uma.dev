@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { ExternalLink, Github } from "lucide-react";
 import { AnimatedBackground } from "@/components/AnimatedBackground";
 import { useProjects } from "@/hooks/use-portfolio";
 import { ProjectCard } from "@/components/ProjectCard";
@@ -35,6 +36,28 @@ export default function Projects() {
             ))}
           </div>
         )}
+
+        {/* View All Projects on GitHub */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-16 text-center"
+        >
+          <a
+            href="https://github.com/umasharma-cell"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-primary to-purple-500 text-white rounded-full font-bold text-lg hover:scale-105 transition-all duration-300 shadow-lg shadow-primary/25"
+          >
+            <Github className="w-6 h-6" />
+            View All Projects on GitHub
+            <ExternalLink className="w-5 h-5" />
+          </a>
+          <p className="mt-4 text-muted-foreground">
+            Explore more of my work and open source contributions
+          </p>
+        </motion.div>
       </div>
     </div>
   );
