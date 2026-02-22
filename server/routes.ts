@@ -89,18 +89,19 @@ async function seedDatabase() {
     const skillsData = [
       { name: "JavaScript (ES6+)", category: "Frontend", proficiency: 95, icon: "SiJavascript", yearsOfExp: 2 },
       { name: "React.js", category: "Frontend", proficiency: 90, icon: "SiReact", yearsOfExp: 2 },
+      { name: "Next.js", category: "Frontend", proficiency: 85, icon: "SiNextdotjs", yearsOfExp: 2 },
       { name: "Redux", category: "Frontend", proficiency: 85, icon: "SiRedux", yearsOfExp: 2 },
       { name: "Tailwind CSS", category: "Frontend", proficiency: 90, icon: "SiTailwindcss", yearsOfExp: 2 },
-      { name: "Node.js", category: "Backend", proficiency: 85, icon: "SiNodedotjs", yearsOfExp: 1 },
-      { name: "Express.js", category: "Backend", proficiency: 85, icon: "SiExpress", yearsOfExp: 1 },
-      { name: "Java", category: "Backend", proficiency: 75, icon: "FaJava", yearsOfExp: 1 },
-      { name: "MongoDB", category: "Database", proficiency: 85, icon: "SiMongodb", yearsOfExp: 1 },
-      { name: "MySQL", category: "Database", proficiency: 80, icon: "SiMysql", yearsOfExp: 1 },
-      { name: "Firebase", category: "Database", proficiency: 80, icon: "SiFirebase", yearsOfExp: 1 },
-      { name: "Supabase", category: "Database", proficiency: 75, icon: "SiSupabase", yearsOfExp: 1 },
-      { name: "Gemini LLM", category: "AI/LLM", proficiency: 80, icon: "SiGoogle", yearsOfExp: 1 },
-      { name: "OpenAI API", category: "AI/LLM", proficiency: 85, icon: "SiOpenai", yearsOfExp: 1 },
-      { name: "Prompt Engineering", category: "AI/LLM", proficiency: 90, icon: "FaBrain", yearsOfExp: 1 }
+      { name: "Node.js", category: "Backend", proficiency: 85, icon: "SiNodedotjs", yearsOfExp: 1.5 },
+      { name: "Express.js", category: "Backend", proficiency: 85, icon: "SiExpress", yearsOfExp: 1.5 },
+      { name: "MongoDB", category: "Database", proficiency: 85, icon: "SiMongodb", yearsOfExp: 1.5 },
+      { name: "Supabase", category: "Database", proficiency: 80, icon: "SiSupabase", yearsOfExp: 1.5 },
+      { name: "AWS EC2", category: "Cloud", proficiency: 75, icon: "SiAmazonwebservices", yearsOfExp: 1.5 },
+      { name: "Gemini LLM", category: "AI/LLM", proficiency: 85, icon: "SiGoogle", yearsOfExp: 1.5 },
+      { name: "Claude API", category: "AI/LLM", proficiency: 85, icon: "SiAntdesign", yearsOfExp: 1.5 },
+      { name: "OpenAI API", category: "AI/LLM", proficiency: 85, icon: "SiOpenai", yearsOfExp: 1.5 },
+      { name: "Cursor AI", category: "AI/LLM", proficiency: 90, icon: "SiVisualstudiocode", yearsOfExp: 1.5 },
+      { name: "Agentic Coding", category: "AI/LLM", proficiency: 85, icon: "FaRobot", yearsOfExp: 1.5 }
     ];
 
     for (const s of skillsData) {
@@ -177,6 +178,22 @@ async function seedDatabase() {
         link: "https://petdoc-chat.vercel.app/",
         githubLink: "https://github.com/umasharma-cell/Veterinary-Chatbot",
         imageUrl: "/attached_assets/screenshot-1771738209356.png"
+      },
+      {
+        title: "Smart Book",
+        description: "AI-based bookmark manager to save, organize, and sync your bookmarks across devices with intelligent categorization.",
+        techStack: ["Next.js", "Supabase", "Tailwind CSS", "AI"],
+        link: "https://smart-book-psi.vercel.app/",
+        githubLink: "https://github.com/umasharma-cell/smart_book",
+        imageUrl: "/attached_assets/screenshot-1771739649923.png"
+      },
+      {
+        title: "Expense Tracker",
+        description: "Personal expense management tool to track and manage your expenses efficiently with detailed history and filtering.",
+        techStack: ["React", "Node.js", "Express", "MongoDB", "Tailwind CSS"],
+        link: "https://expense-tracc.vercel.app/",
+        githubLink: "https://github.com/umasharma-cell/Project_101",
+        imageUrl: "/attached_assets/screenshot-1771739657400.png"
       }
     ];
 
