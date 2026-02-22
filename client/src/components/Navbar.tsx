@@ -59,13 +59,16 @@ export function Navbar() {
               )}
             </Link>
           ))}
-          <a
-            href="/resume.pdf"
-            download="Uma_Sharma_Resume.pdf"
-            className="px-4 py-2 text-sm font-bold bg-white text-black rounded-full hover:bg-primary hover:text-white transition-all duration-300"
-          >
-            Resume
-          </a>
+          <div className="flex items-center gap-2">
+            <a
+              href="/attached_assets/Uma_Sharma_.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-4 py-2 text-sm font-bold bg-white text-black rounded-full hover:bg-primary hover:text-white transition-all duration-300"
+            >
+              Resume
+            </a>
+          </div>
         </div>
 
         {/* Mobile Toggle */}
