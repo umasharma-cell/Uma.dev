@@ -108,52 +108,55 @@ async function seedDatabase() {
           "Implemented frontend features using React Router, Hooks, and Tailwind CSS with clean component architecture.",
           "Built backend APIs using Node.js and Express with MongoDB integration."
         ])
-      },
-      {
-        role: "Frontend Intern",
-        company: "Minzor Pvt Ltd",
-        duration: "August 2023 – October 2023",
-        location: "Remote",
-        description: JSON.stringify([
-          "Contributed to the development of UniMart, a real-time e-commerce web application.",
-          "Proficient in HTML, semantic elements, forms validation, and local storage.",
-          "Integrated Firebase authentication and data handling.",
-          "Collaborated with a team to improve UI performance and cross-browser compatibility."
-        ])
       }
     ];
 
     for (const e of experienceData) {
-      await storage.createExperience(e);
+      const existing = await storage.getExperiences();
+      const found = existing.find(ex => ex.company === e.company && ex.role === e.role);
+      if (!found) {
+        await storage.createExperience(e);
+      } else {
+        await db.update(experiences).set(e).where(eq(experiences.id, found.id));
+      }
     }
 
     // Projects
     const projectsData = [
       {
-        title: "Staffly — HRMS",
-        description: "Full-stack HRMS application to manage employees, roles, attendance, and organizational data. Features secure REST APIs and role-based access control.",
-        techStack: ["Node.js", "Express", "React", "Tailwind CSS"],
-        link: "#",
-        githubLink: "#"
+        title: "Staffly",
+        description: "AI-Powered HR Management system that revolutionizes workforce management with intelligent automation and data-driven insights.",
+        techStack: ["React", "Node.js", "Express", "MongoDB", "Tailwind CSS"],
+        link: "https://staffly-sooty.vercel.app/",
+        githubLink: "https://github.com/umasharma-cell/Staffly",
+        imageUrl: "/attached_assets/screenshot-1771738039004.png"
       },
       {
-        title: "Aabhar Crowdfunding",
-        description: "Crowdfunding platform enabling users to create campaigns and support causes in real time. Focused on scalability, clean UI design, and secure API interactions.",
-        techStack: ["React", "Node.js", "Express", "MongoDB"],
-        link: "#",
-        githubLink: "#"
+        title: "Aabhar",
+        description: "Empowering lives through crowdfunding. A platform connecting people in need with generous donors for medical aid and education.",
+        techStack: ["React", "Firebase", "Tailwind CSS", "Framer Motion"],
+        link: "https://aabhar-2.netlify.app/",
+        githubLink: "https://github.com/Chandrikavishwas/TheAabhar",
+        imageUrl: "/attached_assets/screenshot-1771738200639.png"
       },
       {
-        title: "Circle App AI Avatar",
-        description: "Real-time AI-based avatar generation system improving user engagement through animated avatars. Integrated Gemini LLM for dynamic motion.",
-        techStack: ["Gemini LLM", "React", "Node.js", "AI"],
-        link: "#",
-        githubLink: "#"
+        title: "PetCare AI",
+        description: "AI healthcare system for pets. Understands user queries, provides quick fixes, and handles appointment bookings with doctors.",
+        techStack: ["MERN Stack", "Google Gemini API", "SDK", "Context Support"],
+        link: "https://petdoc-chat.vercel.app/",
+        githubLink: "https://github.com/umasharma-cell/Veterinary-Chatbot",
+        imageUrl: "/attached_assets/screenshot-1771738209356.png"
       }
     ];
 
     for (const p of projectsData) {
-      await storage.createProject(p);
+      const existing = await storage.getProjects();
+      const found = existing.find(proj => proj.title === p.title);
+      if (!found) {
+        await storage.createProject(p);
+      } else {
+        await db.update(projects).set(p).where(eq(projects.id, found.id));
+      }
     }
 
     console.log("Database seeded successfully!");

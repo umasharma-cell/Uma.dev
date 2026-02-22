@@ -13,8 +13,8 @@ export function Footer() {
         </div>
 
         <div className="flex items-center gap-6">
-          <SocialLink href="https://github.com" icon={<Github className="w-5 h-5" />} />
-          <SocialLink href="https://linkedin.com" icon={<Linkedin className="w-5 h-5" />} />
+          <SocialLink href="https://github.com/umasharma-cell" icon={<Github className="w-5 h-5" />} />
+          <SocialLink href="https://www.linkedin.com/in/uma-sharma82/" icon={<Linkedin className="w-5 h-5" />} />
           <SocialLink href="mailto:work.uma26@gmail.com" icon={<Mail className="w-5 h-5" />} />
           <SocialLink href="https://twitter.com" icon={<Twitter className="w-5 h-5" />} />
         </div>

@@ -44,7 +44,7 @@ export default function Home() {
           </h1>
 
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
-            I'm Uma Sharma, a Full Stack Engineer specializing in scalable MERN applications and real-time AI solutions.
+            I'm Uma Sharma, a Full Stack Engineer based in Bangalore, specializing in scalable MERN applications and real-time AI solutions.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

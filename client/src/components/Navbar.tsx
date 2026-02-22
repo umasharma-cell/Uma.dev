@@ -60,9 +60,8 @@ export function Navbar() {
             </Link>
           ))}
           <a
-            href="https://github.com/umasharma" // Replace with real link if available
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/resume.pdf"
+            download="Uma_Sharma_Resume.pdf"
             className="px-4 py-2 text-sm font-bold bg-white text-black rounded-full hover:bg-primary hover:text-white transition-all duration-300"
           >
             Resume

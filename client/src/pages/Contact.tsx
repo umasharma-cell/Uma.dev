@@ -62,7 +62,7 @@ export default function Contact() {
               <ContactItem 
                 icon={<MapPin className="w-6 h-6 text-primary" />}
                 title="Location"
-                value="New Delhi, India"
+                value="Bangalore, India"
               />
             </div>
           </motion.div>
