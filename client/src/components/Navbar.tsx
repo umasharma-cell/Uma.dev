@@ -61,7 +61,7 @@ export function Navbar() {
           ))}
           <div className="flex items-center gap-2">
             <a
-              href="/attached_assets/Uma_Sharma_.pdf"
+              href="/attached_assets/Uma_Sharma_cv.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="px-4 py-2 text-sm font-bold bg-white text-black rounded-full hover:bg-primary hover:text-white transition-all duration-300"
