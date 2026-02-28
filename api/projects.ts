@@ -1,19 +1,20 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { drizzle } from 'drizzle-orm/node-postgres';
+import { pgTable, text, serial, jsonb } from 'drizzle-orm/pg-core';
 import pg from 'pg';
-import * as schema from '../shared/schema';
 
 const { Pool } = pg;
 
-let db: ReturnType<typeof drizzle> | null = null;
-
-function getDb() {
-  if (!db) {
-    const pool = new Pool({ connectionString: process.env.DATABASE_URL });
-    db = drizzle(pool, { schema });
-  }
-  return db;
-}
+// Define projects table inline
+const projects = pgTable('projects', {
+  id: serial('id').primaryKey(),
+  title: text('title').notNull(),
+  description: text('description').notNull(),
+  techStack: jsonb('tech_stack').$type<string[]>().notNull(),
+  link: text('link'),
+  githubLink: text('github_link'),
+  imageUrl: text('image_url'),
+});
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'GET') {
@@ -21,11 +22,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
-    const database = getDb();
-    const projects = await database.select().from(schema.projects);
-    return res.status(200).json(projects);
-  } catch (error) {
+    if (!process.env.DATABASE_URL) {
+      return res.status(500).json({ message: 'DATABASE_URL not configured' });
+    }
+
+    const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+    const db = drizzle(pool);
+    const result = await db.select().from(projects);
+    await pool.end();
+
+    return res.status(200).json(result);
+  } catch (error: any) {
     console.error('Error fetching projects:', error);
-    return res.status(500).json({ message: 'Internal server error' });
+    return res.status(500).json({ message: error.message || 'Internal server error' });
   }
 }

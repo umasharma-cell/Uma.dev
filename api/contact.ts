@@ -1,21 +1,20 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { drizzle } from 'drizzle-orm/node-postgres';
+import { pgTable, text, serial, timestamp } from 'drizzle-orm/pg-core';
 import pg from 'pg';
 import nodemailer from 'nodemailer';
-import * as schema from '../shared/schema';
 import { z } from 'zod';
 
 const { Pool } = pg;
 
-let db: ReturnType<typeof drizzle> | null = null;
-
-function getDb() {
-  if (!db) {
-    const pool = new Pool({ connectionString: process.env.DATABASE_URL });
-    db = drizzle(pool, { schema });
-  }
-  return db;
-}
+// Define contactMessages table inline
+const contactMessages = pgTable('contact_messages', {
+  id: serial('id').primaryKey(),
+  name: text('name').notNull(),
+  email: text('email').notNull(),
+  message: text('message').notNull(),
+  createdAt: timestamp('created_at').defaultNow(),
+});
 
 const contactSchema = z.object({
   name: z.string().min(1),
@@ -29,10 +28,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
-    const input = contactSchema.parse(req.body);
-    const database = getDb();
+    if (!process.env.DATABASE_URL) {
+      return res.status(500).json({ message: 'DATABASE_URL not configured' });
+    }
 
-    const [message] = await database.insert(schema.contactMessages).values(input).returning();
+    const input = contactSchema.parse(req.body);
+
+    const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+    const db = drizzle(pool);
+
+    const [message] = await db.insert(contactMessages).values(input).returning();
 
     // Send email notification
     if (process.env.GMAIL_APP_PASSWORD) {
@@ -52,8 +57,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       });
     }
 
+    await pool.end();
     return res.status(201).json(message);
-  } catch (error) {
+  } catch (error: any) {
     if (error instanceof z.ZodError) {
       return res.status(400).json({
         message: 'Invalid input',
@@ -61,6 +67,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       });
     }
     console.error('Error submitting contact:', error);
-    return res.status(500).json({ message: 'Internal server error' });
+    return res.status(500).json({ message: error.message || 'Internal server error' });
   }
 }
