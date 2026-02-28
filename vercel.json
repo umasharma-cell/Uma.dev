@@ -1,0 +1,11 @@
+{
+  "buildCommand": "npm run build:vercel",
+  "outputDirectory": "dist/public",
+  "framework": "vite",
+  "rewrites": [
+    { "source": "/api/skills", "destination": "/api/skills" },
+    { "source": "/api/experiences", "destination": "/api/experiences" },
+    { "source": "/api/projects", "destination": "/api/projects" },
+    { "source": "/api/contact", "destination": "/api/contact" }
+  ]
+}

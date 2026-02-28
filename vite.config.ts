@@ -1,7 +1,15 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
+import { cpSync, existsSync } from "fs";
 import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
+
+// Copy attached_assets to client/public for Vercel
+const assetsSource = path.resolve(import.meta.dirname, "attached_assets");
+const assetsDest = path.resolve(import.meta.dirname, "client/public/attached_assets");
+if (existsSync(assetsSource) && !existsSync(assetsDest)) {
+  cpSync(assetsSource, assetsDest, { recursive: true });
+}
 
 export default defineConfig({
   plugins: [
