@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Download } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const links = [
@@ -17,91 +17,104 @@ export function Navbar() {
   const [location] = useLocation();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
     <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5 }}
+      initial={{ y: -100, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-        scrolled ? "bg-background/80 backdrop-blur-md border-b border-white/5 py-4" : "bg-transparent py-6"
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
+        scrolled
+          ? "bg-background/60 backdrop-blur-2xl border-b border-white/5 py-3 shadow-lg shadow-black/20"
+          : "bg-transparent py-6"
       )}
     >
       <div className="container mx-auto px-6 flex items-center justify-between">
-        <Link href="/" className="text-2xl font-display font-bold text-white tracking-tighter hover:text-primary transition-colors">
-          UMA<span className="text-primary">.DEV</span>
+        <Link href="/">
+          <motion.span
+            className="text-2xl font-display font-bold tracking-tighter cursor-pointer"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <span className="text-white">UMA</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">.DEV</span>
+          </motion.span>
         </Link>
 
-        {/* Desktop Menu */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden md:flex items-center gap-1">
           {links.map((link) => (
-            <Link 
-              key={link.href} 
-              href={link.href} 
+            <Link
+              key={link.href}
+              href={link.href}
               className={cn(
-                "relative text-sm font-medium tracking-wide transition-colors hover:text-primary",
-                location === link.href ? "text-primary" : "text-muted-foreground"
+                "relative px-5 py-2.5 text-sm font-medium tracking-wide transition-all duration-300 rounded-full",
+                location === link.href ? "text-white" : "text-muted-foreground hover:text-white"
               )}
             >
-              {link.label}
               {location === link.href && (
                 <motion.div
-                  layoutId="underline"
-                  className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary"
+                  layoutId="nav-pill"
+                  className="absolute inset-0 bg-primary/15 border border-primary/30 rounded-full"
+                  transition={{ type: "spring", bounce: 0.25, duration: 0.5 }}
                 />
               )}
+              <span className="relative z-10">{link.label}</span>
             </Link>
           ))}
-          <div className="flex items-center gap-2">
-            <a
-              href="/attached_assets/Uma_Sharma_cv.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-4 py-2 text-sm font-bold bg-white text-black rounded-full hover:bg-primary hover:text-white transition-all duration-300"
-            >
-              Resume
-            </a>
-          </div>
+          <motion.a
+            href="/attached_assets/Uma_Sharma_cv.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="ml-4 px-5 py-2.5 text-sm font-bold bg-gradient-to-r from-primary to-purple-500 text-white rounded-full hover:shadow-lg hover:shadow-primary/25 transition-all duration-300 flex items-center gap-2"
+            whileHover={{ scale: 1.05, y: -2 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <Download className="w-4 h-4" /> Resume
+          </motion.a>
         </div>
 
-        {/* Mobile Toggle */}
-        <button 
-          className="md:hidden text-white"
+        <motion.button
+          className="md:hidden text-white p-2 rounded-full bg-secondary/50 backdrop-blur-sm"
           onClick={() => setIsOpen(!isOpen)}
+          whileTap={{ scale: 0.9 }}
         >
-          {isOpen ? <X /> : <Menu />}
-        </button>
+          {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+        </motion.button>
       </div>
 
-      {/* Mobile Menu */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-background border-b border-white/10 overflow-hidden"
+            transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
+            className="md:hidden bg-background/95 backdrop-blur-2xl border-b border-white/10 overflow-hidden"
           >
-            <div className="flex flex-col p-6 gap-4">
-              {links.map((link) => (
-                <Link 
-                  key={link.href} 
-                  href={link.href} 
-                  className={cn(
-                    "text-lg font-medium",
-                    location === link.href ? "text-primary" : "text-foreground"
-                  )}
-                  onClick={() => setIsOpen(false)}
+            <div className="flex flex-col p-6 gap-2">
+              {links.map((link, idx) => (
+                <motion.div
+                  key={link.href}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: idx * 0.05 }}
                 >
-                  {link.label}
-                </Link>
+                  <Link
+                    href={link.href}
+                    className={cn(
+                      "block text-lg font-medium py-3 px-4 rounded-xl transition-all",
+                      location === link.href ? "text-primary bg-primary/10" : "text-foreground hover:bg-secondary/50"
+                    )}
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {link.label}
+                  </Link>
+                </motion.div>
               ))}
             </div>
           </motion.div>

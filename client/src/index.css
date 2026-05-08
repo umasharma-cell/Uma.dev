@@ -5,76 +5,46 @@
 @tailwind utilities;
 
 :root {
-  /* Deep Space / Cyberpunk Palette */
-  --background: 240 10% 3.9%;   /* Very dark grey/blue */
-  --foreground: 0 0% 98%;       /* White */
-
+  --background: 240 10% 3.9%;
+  --foreground: 0 0% 98%;
   --card: 240 10% 3.9%;
   --card-foreground: 0 0% 98%;
-
   --popover: 240 10% 3.9%;
   --popover-foreground: 0 0% 98%;
-
-  --primary: 263 70% 50%;       /* Neon Purple */
+  --primary: 263 70% 50%;
   --primary-foreground: 210 40% 98%;
-
-  --secondary: 240 4% 16%;      /* Dark Grey for surface contrast */
+  --secondary: 240 4% 16%;
   --secondary-foreground: 0 0% 98%;
-
   --muted: 240 4% 16%;
   --muted-foreground: 240 5% 64.9%;
-
-  --accent: 180 100% 50%;       /* Cyan/Teal Neon for highlights */
+  --accent: 180 100% 50%;
   --accent-foreground: 222 47% 11.2%;
-
   --destructive: 0 62.8% 30.6%;
   --destructive-foreground: 0 0% 98%;
-
   --border: 240 4% 16%;
   --input: 240 4% 16%;
   --ring: 263 70% 50%;
-
   --radius: 0.75rem;
-
   --font-sans: 'Inter', sans-serif;
   --font-display: 'Space Grotesk', sans-serif;
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground font-sans antialiased overflow-x-hidden selection:bg-primary/30 selection:text-white;
-  }
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-display tracking-tight;
-  }
+  * { @apply border-border; }
+  body { @apply bg-background text-foreground font-sans antialiased overflow-x-hidden selection:bg-primary/30 selection:text-white; }
+  h1, h2, h3, h4, h5, h6 { @apply font-display tracking-tight; }
 }
 
 @layer utilities {
-  .text-glow {
-    text-shadow: 0 0 10px hsla(var(--primary), 0.5), 0 0 20px hsla(var(--primary), 0.3);
-  }
-  .box-glow {
-    box-shadow: 0 0 20px hsla(var(--primary), 0.15);
-  }
-  .glass-panel {
-    @apply bg-secondary/30 backdrop-blur-md border border-white/10;
-  }
+  .text-glow { text-shadow: 0 0 10px hsla(var(--primary), 0.5), 0 0 30px hsla(var(--primary), 0.3), 0 0 50px hsla(var(--primary), 0.15); }
+  .box-glow { box-shadow: 0 0 20px hsla(var(--primary), 0.15), 0 0 40px hsla(var(--primary), 0.08); }
+  .glass-panel { @apply bg-secondary/30 backdrop-blur-xl border border-white/10; }
 }
 
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-track {
-  background: hsl(var(--background));
-}
-::-webkit-scrollbar-thumb {
-  background: hsl(var(--primary) / 0.5);
-  border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--primary));
-}
+/* Scrollbar — can't be done in Tailwind */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: hsl(var(--background)); }
+::-webkit-scrollbar-thumb { background: linear-gradient(180deg, hsl(var(--primary) / 0.5), hsl(var(--accent) / 0.3)); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: hsl(var(--primary)); }
+
+html { scroll-behavior: smooth; }

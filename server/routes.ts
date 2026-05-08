@@ -243,5 +243,38 @@ async function seedDatabase() {
     }
 
     console.log("Database seeded successfully!");
+  } else {
+    // Always ensure all projects exist even if DB was already seeded
+    await ensureProjects();
+  }
+}
+
+async function ensureProjects() {
+  const projectsData = [
+    {
+      title: "Document Processing",
+      description: "AI-powered document processing pipeline that analyzes PDFs, generates summaries, and extracts key topics using intelligent automation.",
+      techStack: ["Next.js", "FastAPI", "LangChain", "LangGraph", "Tailwind CSS"],
+      link: "https://claim-processing-pipeline.vercel.app/",
+      githubLink: "https://github.com/umasharma-cell/Claim_Processing_Pipeline",
+      imageUrl: "/attached_assets/document-processing.png"
+    },
+    {
+      title: "Staffly",
+      description: "AI-Powered HR Management system that revolutionizes workforce management with intelligent automation and data-driven insights.",
+      techStack: ["React", "Node.js", "Express", "MongoDB", "Tailwind CSS"],
+      link: "https://staffly-sooty.vercel.app/",
+      githubLink: "https://github.com/umasharma-cell/Staffly",
+      imageUrl: "/attached_assets/staffly.png"
+    },
+  ];
+
+  for (const p of projectsData) {
+    const existing = await storage.getProjects();
+    const found = existing.find(proj => proj.title === p.title);
+    if (!found) {
+      await storage.createProject(p);
+      console.log(`Added missing project: ${p.title}`);
+    }
   }
 }
