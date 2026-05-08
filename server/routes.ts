@@ -183,12 +183,12 @@ async function seedDatabase() {
     // Projects
     const projectsData = [
       {
-        title: "Staffly",
-        description: "AI-Powered HR Management system that revolutionizes workforce management with intelligent automation and data-driven insights.",
-        techStack: ["React", "Node.js", "Express", "MongoDB", "Tailwind CSS"],
-        link: "https://staffly-sooty.vercel.app/",
-        githubLink: "https://github.com/umasharma-cell/Staffly",
-        imageUrl: "/attached_assets/staffly.png"
+        title: "Document Processing",
+        description: "AI-powered document processing pipeline that analyzes PDFs, generates summaries, and extracts key topics using intelligent automation.",
+        techStack: ["Next.js", "FastAPI", "LangChain", "LangGraph", "Tailwind CSS"],
+        link: "https://claim-processing-pipeline.vercel.app/",
+        githubLink: "https://github.com/umasharma-cell/Claim_Processing_Pipeline",
+        imageUrl: "/attached_assets/document-processing.png"
       },
       {
         title: "Aabhar",
@@ -205,6 +205,14 @@ async function seedDatabase() {
         link: "https://petdoc-chat.vercel.app/",
         githubLink: "https://github.com/umasharma-cell/Veterinary-Chatbot",
         imageUrl: "/attached_assets/petcare.png"
+      },
+      {
+        title: "Staffly",
+        description: "AI-Powered HR Management system that revolutionizes workforce management with intelligent automation and data-driven insights.",
+        techStack: ["React", "Node.js", "Express", "MongoDB", "Tailwind CSS"],
+        link: "https://staffly-sooty.vercel.app/",
+        githubLink: "https://github.com/umasharma-cell/Staffly",
+        imageUrl: "/attached_assets/staffly.png"
       },
       {
         title: "Smart Book",

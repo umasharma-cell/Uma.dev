@@ -28,16 +28,25 @@ export default function About() {
           className="max-w-4xl mx-auto mb-20"
         >
           <h1 className="text-5xl md:text-7xl font-display font-bold mb-8">About Me</h1>
-          <div className="prose prose-invert prose-lg max-w-none text-muted-foreground">
-            <p className="text-xl text-foreground font-medium mb-6">
-              I'm Uma Sharma, a passionate Full Stack Engineer driven by the challenge of building scalable, high-performance web applications.
-            </p>
-            <p className="mb-4">
-              With a strong foundation in the MERN stack and a keen interest in AI/LLM integration, I bridge the gap between complex backend logic and intuitive frontend experiences.
-            </p>
-            <p>
-              My journey involves solving real-world problems through code, optimizing performance, and crafting pixel-perfect interfaces. Whether it's architecting a microservices backend or animating a landing page, I love every part of the process.
-            </p>
+          <div className="flex flex-col md:flex-row gap-10 items-start">
+            <div className="w-48 h-48 md:w-56 md:h-56 rounded-2xl overflow-hidden border-2 border-primary/30 shadow-lg shadow-primary/10 flex-shrink-0">
+              <img
+                src="/attached_assets/uma-photo.jpg"
+                alt="Uma Sharma"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="prose prose-invert prose-lg max-w-none text-muted-foreground">
+              <p className="text-xl text-foreground font-medium mb-6">
+                I'm Uma Sharma, a passionate Full Stack Engineer driven by the challenge of building scalable, high-performance web applications.
+              </p>
+              <p className="mb-4">
+                With a strong foundation in the MERN stack and a keen interest in AI/LLM integration, I bridge the gap between complex backend logic and intuitive frontend experiences.
+              </p>
+              <p>
+                My journey involves solving real-world problems through code, optimizing performance, and crafting pixel-perfect interfaces. Whether it's architecting a microservices backend or animating a landing page, I love every part of the process.
+              </p>
+            </div>
           </div>
         </motion.div>
 
