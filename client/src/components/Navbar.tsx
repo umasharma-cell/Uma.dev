@@ -21,11 +21,11 @@ function scrollToSkills() {
 
 function handleResumeClick(e: React.MouseEvent<HTMLAnchorElement>) {
   e.preventDefault();
-  const url = "/attached_assets/Uma_Sharma_cv.pdf";
+  const url = "/attached_assets/Uma_Sharma_Resume_.pdf";
   // Trigger download
   const a = document.createElement("a");
   a.href = url;
-  a.download = "Uma_Sharma_cv.pdf";
+  a.download = "Uma_Sharma_Resume_.pdf";
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
@@ -83,7 +83,12 @@ export function Navbar() {
                   }
                   scrollToSkills();
                 }
-              : undefined;
+              : (e: React.MouseEvent) => {
+                  if (location === link.href) {
+                    e.preventDefault();
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                  }
+                };
 
             return (
               <Link
@@ -107,7 +112,7 @@ export function Navbar() {
             );
           })}
           <motion.a
-            href="/attached_assets/Uma_Sharma_cv.pdf"
+            href="/attached_assets/Uma_Sharma_Resume_.pdf"
             onClick={handleResumeClick}
             className="ml-4 px-5 py-2.5 text-sm font-bold bg-gradient-to-r from-primary to-purple-500 text-white rounded-full hover:shadow-lg hover:shadow-primary/25 transition-all duration-300 flex items-center gap-2"
             whileHover={{ scale: 1.05, y: -2 }}
@@ -158,6 +163,9 @@ export function Navbar() {
                             navigate("/about");
                           }
                           scrollToSkills();
+                        } else if (location === link.href) {
+                          e.preventDefault();
+                          window.scrollTo({ top: 0, behavior: "smooth" });
                         }
                         setIsOpen(false);
                       }}

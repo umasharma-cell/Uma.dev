@@ -121,13 +121,13 @@ export default function Home() {
               </motion.span>
             </Link>
             <motion.a
-              href="/attached_assets/Uma_Sharma_cv.pdf"
+              href="/attached_assets/Uma_Sharma_Resume_.pdf"
               onClick={(e) => {
                 e.preventDefault();
-                const url = "/attached_assets/Uma_Sharma_cv.pdf";
+                const url = "/attached_assets/Uma_Sharma_Resume_.pdf";
                 const a = document.createElement("a");
                 a.href = url;
-                a.download = "Uma_Sharma_cv.pdf";
+                a.download = "Uma_Sharma_Resume_.pdf";
                 document.body.appendChild(a);
                 a.click();
                 document.body.removeChild(a);
