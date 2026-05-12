@@ -7,14 +7,36 @@ import { cn } from "@/lib/utils";
 const links = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
+  { href: "/about#skills", label: "Skills" },
   { href: "/projects", label: "Projects" },
   { href: "/contact", label: "Contact" },
 ];
 
+function scrollToSkills() {
+  setTimeout(() => {
+    const el = document.getElementById("skills");
+    if (el) el.scrollIntoView({ behavior: "smooth" });
+  }, 100);
+}
+
+function handleResumeClick(e: React.MouseEvent<HTMLAnchorElement>) {
+  e.preventDefault();
+  const url = "/attached_assets/Uma_Sharma_cv.pdf";
+  // Trigger download
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "Uma_Sharma_cv.pdf";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  // Also open for preview
+  window.open(url, "_blank");
+}
+
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [location] = useLocation();
+  const [location, navigate] = useLocation();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -47,29 +69,46 @@ export function Navbar() {
         </Link>
 
         <div className="hidden md:flex items-center gap-1">
-          {links.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={cn(
-                "relative px-5 py-2.5 text-sm font-medium tracking-wide transition-all duration-300 rounded-full",
-                location === link.href ? "text-white" : "text-muted-foreground hover:text-white"
-              )}
-            >
-              {location === link.href && (
-                <motion.div
-                  layoutId="nav-pill"
-                  className="absolute inset-0 bg-primary/15 border border-primary/30 rounded-full"
-                  transition={{ type: "spring", bounce: 0.25, duration: 0.5 }}
-                />
-              )}
-              <span className="relative z-10">{link.label}</span>
-            </Link>
-          ))}
+          {links.map((link) => {
+            const isHash = link.href.includes("#");
+            const isActive = isHash
+              ? location === "/about" && window.location.hash === "#skills"
+              : location === link.href;
+
+            const handleClick = isHash
+              ? (e: React.MouseEvent) => {
+                  e.preventDefault();
+                  if (location !== "/about") {
+                    navigate("/about");
+                  }
+                  scrollToSkills();
+                }
+              : undefined;
+
+            return (
+              <Link
+                key={link.href}
+                href={isHash ? "/about" : link.href}
+                onClick={handleClick}
+                className={cn(
+                  "relative px-5 py-2.5 text-sm font-medium tracking-wide transition-all duration-300 rounded-full",
+                  isActive ? "text-white" : "text-muted-foreground hover:text-white"
+                )}
+              >
+                {isActive && (
+                  <motion.div
+                    layoutId="nav-pill"
+                    className="absolute inset-0 bg-primary/15 border border-primary/30 rounded-full"
+                    transition={{ type: "spring", bounce: 0.25, duration: 0.5 }}
+                  />
+                )}
+                <span className="relative z-10">{link.label}</span>
+              </Link>
+            );
+          })}
           <motion.a
             href="/attached_assets/Uma_Sharma_cv.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
+            onClick={handleResumeClick}
             className="ml-4 px-5 py-2.5 text-sm font-bold bg-gradient-to-r from-primary to-purple-500 text-white rounded-full hover:shadow-lg hover:shadow-primary/25 transition-all duration-300 flex items-center gap-2"
             whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.95 }}
@@ -97,25 +136,37 @@ export function Navbar() {
             className="md:hidden bg-background/95 backdrop-blur-2xl border-b border-white/10 overflow-hidden"
           >
             <div className="flex flex-col p-6 gap-2">
-              {links.map((link, idx) => (
-                <motion.div
-                  key={link.href}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: idx * 0.05 }}
-                >
-                  <Link
-                    href={link.href}
-                    className={cn(
-                      "block text-lg font-medium py-3 px-4 rounded-xl transition-all",
-                      location === link.href ? "text-primary bg-primary/10" : "text-foreground hover:bg-secondary/50"
-                    )}
-                    onClick={() => setIsOpen(false)}
+              {links.map((link, idx) => {
+                const isHash = link.href.includes("#");
+                return (
+                  <motion.div
+                    key={link.href}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: idx * 0.05 }}
                   >
-                    {link.label}
-                  </Link>
-                </motion.div>
-              ))}
+                    <Link
+                      href={isHash ? "/about" : link.href}
+                      className={cn(
+                        "block text-lg font-medium py-3 px-4 rounded-xl transition-all",
+                        location === link.href ? "text-primary bg-primary/10" : "text-foreground hover:bg-secondary/50"
+                      )}
+                      onClick={(e: React.MouseEvent) => {
+                        if (isHash) {
+                          e.preventDefault();
+                          if (location !== "/about") {
+                            navigate("/about");
+                          }
+                          scrollToSkills();
+                        }
+                        setIsOpen(false);
+                      }}
+                    >
+                      {link.label}
+                    </Link>
+                  </motion.div>
+                );
+              })}
             </div>
           </motion.div>
         )}

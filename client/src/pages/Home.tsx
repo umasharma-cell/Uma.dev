@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowRight, ChevronDown, Sparkles } from "lucide-react";
+import { ArrowRight, Sparkles } from "lucide-react";
 import { Link } from "wouter";
 import { AnimatedBackground } from "@/components/AnimatedBackground";
 import { SkillCard } from "@/components/SkillCard";
@@ -109,7 +109,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1, duration: 0.6 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4"
+            className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-8"
           >
             <Link href="/projects">
               <motion.span
@@ -117,9 +117,28 @@ export default function Home() {
                 whileHover={{ scale: 1.05, y: -3, boxShadow: "0 20px 40px rgba(124, 58, 237, 0.3)" }}
                 whileTap={{ scale: 0.97 }}
               >
-                View Projects <ArrowRight className="w-5 h-5" />
+                View Projects
               </motion.span>
             </Link>
+            <motion.a
+              href="/attached_assets/Uma_Sharma_cv.pdf"
+              onClick={(e) => {
+                e.preventDefault();
+                const url = "/attached_assets/Uma_Sharma_cv.pdf";
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = "Uma_Sharma_cv.pdf";
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                window.open(url, "_blank");
+              }}
+              className="text-sm font-semibold text-muted-foreground hover:text-primary transition-colors duration-300 cursor-pointer border-b border-dashed border-muted-foreground/40 hover:border-primary"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.97 }}
+            >
+              Resume
+            </motion.a>
             <Link href="/contact">
               <motion.span
                 className="px-8 py-4 bg-secondary/50 backdrop-blur-sm text-white rounded-full font-bold text-lg border border-white/10 flex items-center gap-2 cursor-pointer"
@@ -132,13 +151,6 @@ export default function Home() {
           </motion.div>
         </motion.div>
 
-        <motion.div
-          animate={{ y: [0, 12, 0] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 text-muted-foreground"
-        >
-          <ChevronDown className="w-8 h-8" />
-        </motion.div>
       </section>
 
       {/* Skills Preview */}

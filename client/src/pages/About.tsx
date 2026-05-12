@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { MapPin, Briefcase } from "lucide-react";
+import { MapPin, Briefcase, Users, MessageSquare, Lightbulb, RefreshCw, Clock, Shield, Brain, Handshake } from "lucide-react";
 import { AnimatedBackground } from "@/components/AnimatedBackground";
 import { useExperiences, useSkills } from "@/hooks/use-portfolio";
 import { SkillCard } from "@/components/SkillCard";
@@ -204,7 +204,7 @@ export default function About() {
         </motion.div>
 
         {/* Skills Section */}
-        <div className="max-w-6xl mx-auto">
+        <div id="skills" className="max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -250,6 +250,55 @@ export default function About() {
               ))}
             </div>
           )}
+
+          {/* Soft Skills Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="mt-20"
+          >
+            <motion.span
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              className="inline-block px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium mb-4"
+            >
+              Beyond Code
+            </motion.span>
+            <h2 className="text-3xl font-display font-bold mb-8">Soft Skills</h2>
+
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-6">
+              {[
+                { name: "Teamwork", icon: Users },
+                { name: "Communication", icon: MessageSquare },
+                { name: "Problem Solving", icon: Lightbulb },
+                { name: "Adaptability", icon: RefreshCw },
+                { name: "Time Management", icon: Clock },
+                { name: "Leadership", icon: Shield },
+                { name: "Critical Thinking", icon: Brain },
+                { name: "Collaboration", icon: Handshake },
+              ].map((skill, idx) => (
+                <motion.div
+                  key={skill.name}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: idx * 0.08, duration: 0.5 }}
+                  whileHover={{ scale: 1.05, y: -4 }}
+                  className="group relative p-5 rounded-2xl bg-secondary/10 border border-white/5 hover:border-primary/30 hover:bg-secondary/20 transition-all duration-300 text-center"
+                >
+                  <div className="flex flex-col items-center gap-3">
+                    <div className="p-3 rounded-xl bg-primary/10 border border-primary/20 group-hover:bg-primary/20 transition-colors">
+                      <skill.icon className="w-5 h-5 text-primary" />
+                    </div>
+                    <span className="text-sm font-medium text-foreground/90">{skill.name}</span>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
         </div>
       </div>
     </div>
